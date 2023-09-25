@@ -14,6 +14,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.tugas9mysqlcr.manage.GetInsertKaryawan;
+
 import java.util.Calendar;
 
 import retrofit2.Call;
@@ -96,9 +98,15 @@ public class AddActivity extends AppCompatActivity {
                     })
                     .create().show();
                 } else {
-                    Karyawaninsertget(kode.getText().toString(),nama.getText().toString(), alamat.getText().toString(),
-                            telp.getText().toString(),tgl.getText().toString(),kota.getText().toString(),
-                            kabupaten.getText().toString(),kecamatan.getText().toString(),kelurahan.getText().toString());
+                    Karyawaninsertget(kode.getText().toString(),
+                            nama.getText().toString(),
+                            alamat.getText().toString(),
+                            telp.getText().toString(),
+                            tgl.getText().toString(),
+                            kota.getText().toString(),
+                            kabupaten.getText().toString(),
+                            kecamatan.getText().toString(),
+                            kelurahan.getText().toString());
                 }
             }
         });
@@ -121,8 +129,7 @@ public class AddActivity extends AppCompatActivity {
         });
     }
 
-     void Karyawaninsertget(String kode, String nama, String alamat, String telp,
-                                  String tgl, String kota, String kabupaten, String kecamatan, String kelurahan) {
+     void Karyawaninsertget(String kode, String nama, String alamat, String telp, String tgl, String kota, String kabupaten, String kecamatan, String kelurahan) {
         mApiInterface.getinsertkaryawan("ok",kode, nama, alamat, telp, tgl, kota, kabupaten, kecamatan, kelurahan).enqueue(new Callback<GetInsertKaryawan>() {
             @Override
             public void onResponse(Call<GetInsertKaryawan> call, Response<GetInsertKaryawan> response) {

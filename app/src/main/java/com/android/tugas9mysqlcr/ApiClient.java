@@ -18,6 +18,7 @@ public class ApiClient {
                 .addInterceptor(interceptor)
                 .connectTimeout(1000, TimeUnit.SECONDS)
                 .readTimeout(1000, TimeUnit.SECONDS).build();
+
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)

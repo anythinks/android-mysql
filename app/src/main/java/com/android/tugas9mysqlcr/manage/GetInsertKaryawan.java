@@ -1,5 +1,6 @@
-package com.android.tugas9mysqlcr;
+package com.android.tugas9mysqlcr.manage;
 
+import com.android.tugas9mysqlcr.Hasil;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -18,3 +19,4 @@ public class GetInsertKaryawan {
         this.hasil = hasil;
     }
 }
+
