@@ -44,7 +44,7 @@ public class AddActivity extends AppCompatActivity {
         kabupaten = findViewById(R.id.editTextTextkabupaten);
         kecamatan = findViewById(R.id.editTextTextkecamatan);
         kelurahan = findViewById(R.id.editTextTextkelurahan);
-        Button simpan= findViewById(R.id.button);
+        Button simpan = findViewById(R.id.button);
         Button clear = findViewById(R.id.button2);
         builder = new AlertDialog.Builder(this);
         Calendar calendar = Calendar.getInstance();
@@ -53,61 +53,47 @@ public class AddActivity extends AppCompatActivity {
         int year = calendar.get(Calendar.YEAR);
 
         tgl.setInputType(0);
-        mApiInterface =ApiClient.getRetrofit().create(ApiInterface.class);
+        mApiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        tgl.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    pickerdate = new DatePickerDialog(AddActivity.this, new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            tgl.setText(dayOfMonth+"/"+(month+1)+"/"+year);
-                        }
-                    }, year, month, day);
-                    pickerdate.show();
-                }
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    pickerdate = new DatePickerDialog(AddActivity.this, new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            tgl.setText(dayOfMonth+"/0"+(month+1)+"/"+year);
-                        }
-                    }, year, month, day);
-                    pickerdate.show();
-                }
-            });
+        tgl.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                pickerdate = new DatePickerDialog(AddActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year12, int month12, int dayOfMonth) {
+                        tgl.setText(dayOfMonth + "/" + (month12 + 1) + "/" + year12);
+                    }
+                }, year, month, day);
+                pickerdate.show();
             }
+            v.setOnClickListener(v1 -> {
+                pickerdate = new DatePickerDialog(AddActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year1, int month1, int dayOfMonth) {
+                        tgl.setText(dayOfMonth + "/0" + (month1 + 1) + "/" + year1);
+                    }
+                }, year, month, day);
+                pickerdate.show();
+            });
         });
 
-        simpan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (kode.length()==0){
-                    builder.setTitle("Gagal")
-                    .setMessage("Harap masukkan kode")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .create().show();
-                } else {
-                    Karyawaninsertget(kode.getText().toString(),
-                            nama.getText().toString(),
-                            alamat.getText().toString(),
-                            telp.getText().toString(),
-                            tgl.getText().toString(),
-                            kota.getText().toString(),
-                            kabupaten.getText().toString(),
-                            kecamatan.getText().toString(),
-                            kelurahan.getText().toString());
-                }
+        simpan.setOnClickListener(view -> {
+            if (kode.length() == 0) {
+                builder.setTitle("Gagal")
+                        .setMessage("Harap masukkan kode")
+                        .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
+                        .create().show();
+            } else {
+                Karyawaninsertget(kode.getText().toString(),
+                        nama.getText().toString(),
+                        alamat.getText().toString(),
+                        telp.getText().toString(),
+                        tgl.getText().toString(),
+                        kota.getText().toString(),
+                        kabupaten.getText().toString(),
+                        kecamatan.getText().toString(),
+                        kelurahan.getText().toString());
             }
         });
 
@@ -129,16 +115,16 @@ public class AddActivity extends AppCompatActivity {
         });
     }
 
-     void Karyawaninsertget(String kode, String nama, String alamat, String telp, String tgl, String kota, String kabupaten, String kecamatan, String kelurahan) {
-        mApiInterface.getinsertkaryawan("ok",kode, nama, alamat, telp, tgl, kota, kabupaten, kecamatan, kelurahan).enqueue(new Callback<GetInsertKaryawan>() {
+    void Karyawaninsertget(String kode, String nama, String alamat, String telp, String tgl, String kota, String kabupaten, String kecamatan, String kelurahan) {
+        mApiInterface.getinsertkaryawan("ok", kode, nama, alamat, telp, tgl, kota, kabupaten, kecamatan, kelurahan).enqueue(new Callback<GetInsertKaryawan>() {
             @Override
             public void onResponse(Call<GetInsertKaryawan> call, Response<GetInsertKaryawan> response) {
-                Toast.makeText(getApplicationContext(),"Berhasil", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Berhasil", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<GetInsertKaryawan> call, Throwable t) {
-                Toast.makeText(getApplication(),"Gagal", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplication(), "Gagal", Toast.LENGTH_SHORT).show();
             }
         });
     }

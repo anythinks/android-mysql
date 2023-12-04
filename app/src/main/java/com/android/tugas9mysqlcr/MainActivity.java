@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +14,7 @@ import com.android.tugas9mysqlcr.manage.GetKaryawan;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
     ApiInterface mApiInterface;
     RecyclerView recyclerview;
-    ArrayList<Hasil> hasil;
-    Adapterisi adapterisi;
+    List<Hasil> hasil = new ArrayList<>();
+    AdapterRecyclerView adapter;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -33,17 +33,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        hasil=new ArrayList<>();
         recyclerview = findViewById(R.id.isi);
         FloatingActionButton floatbt = findViewById(R.id.floating);
         mApiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
 
-        floatbt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), AddActivity.class));
-            }
-        });
+        floatbt.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AddActivity.class)));
     }
 
     @Override
@@ -70,9 +64,10 @@ public class MainActivity extends AppCompatActivity {
                     String kelurahan = response.body().getHasil().get(i).getKelurahan();
                     hasil.add(new Hasil(kode, nama, alamat, telp, tgl, kota, kabupaten, kecamatan, kelurahan));
                 }
-                adapterisi = new Adapterisi(hasil, getApplication());
+
+                adapter = new AdapterRecyclerView(hasil);
                 recyclerview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                recyclerview.setAdapter(adapterisi);
+                recyclerview.setAdapter(adapter);
             }
 
             @Override

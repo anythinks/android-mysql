@@ -27,7 +27,8 @@ public interface ApiInterface {
             @Field("kota") String kota,
             @Field("kabupaten") String kabupaten,
             @Field("kecamatan") String kecamatan,
-            @Field("kelurahan") String kelurahan);
+            @Field("kelurahan") String kelurahan
+    );
 
     @FormUrlEncoded
     @POST("Update.php")
@@ -41,7 +42,8 @@ public interface ApiInterface {
             @Field("kota") String kota,
             @Field("kabupaten") String kabupaten,
             @Field("kecamatan") String kecamatan,
-            @Field("kelurahan") String kelurahan);
+            @Field("kelurahan") String kelurahan
+    );
 
     @FormUrlEncoded
     @POST("Delete.php")

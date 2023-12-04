@@ -4,33 +4,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Hasil {
-    @SerializedName("kode")
-    @Expose
-    private String kode;
-    @SerializedName("nama")
-    @Expose
-    private String nama;
-    @SerializedName("alamat")
-    @Expose
-    private String alamat;
-    @SerializedName("telp")
-    @Expose
-    private String telp;
-    @SerializedName("tgl")
-    @Expose
-    private String tgl;
-    @SerializedName("kota")
-    @Expose
-    private String kota;
-    @SerializedName("kabupaten")
-    @Expose
-    private String kabupaten;
-    @SerializedName("kecamatan")
-    @Expose
-    private String kecamatan;
-    @SerializedName("kelurahan")
-    @Expose
-    private String kelurahan;
+
+    private String kode, nama, alamat, telp, tgl, kota, kabupaten, kecamatan, kelurahan;
 
     public Hasil(String kode, String nama, String alamat, String telp, String tgl, String kota, String kabupaten, String kecamatan, String kelurahan) {
         this.kode = kode;
