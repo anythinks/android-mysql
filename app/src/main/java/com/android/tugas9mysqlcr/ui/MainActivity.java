@@ -1,4 +1,4 @@
-package com.android.tugas9mysqlcr;
+package com.android.tugas9mysqlcr.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -6,11 +6,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.tugas9mysqlcr.manage.GetKaryawan;
+import com.android.tugas9mysqlcr.response.Hasil;
+import com.android.tugas9mysqlcr.R;
+import com.android.tugas9mysqlcr.response.GetKaryawan;
+import com.android.tugas9mysqlcr.retrofit.ApiClient;
+import com.android.tugas9mysqlcr.retrofit.ApiInterface;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -35,9 +40,10 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerview = findViewById(R.id.isi);
         FloatingActionButton floatbt = findViewById(R.id.floating);
-        mApiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
+        mApiInterface = ApiClient.getApiService();
 
-        floatbt.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), AddActivity.class)));
+        floatbt.setOnClickListener(v ->
+                startActivity(new Intent(getApplicationContext(), AddActivity.class)));
     }
 
     @Override
@@ -49,8 +55,10 @@ public class MainActivity extends AppCompatActivity {
     public void karyawanget() {
         mApiInterface.getkaryawan().enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<GetKaryawan> call, Response<GetKaryawan> response) {
-                Log.d("Hasil", response.toString());
+            public void onResponse(Call<GetKaryawan> call,Response<GetKaryawan> response) {
+                if (!response.isSuccessful()) {
+                    Log.d("Hasil", response.message());
+                }
 
                 for (int i = 0; i < response.body().getHasil().size(); i++) {
                     String kode = response.body().getHasil().get(i).getKode();

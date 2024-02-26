@@ -1,23 +1,22 @@
-package com.android.tugas9mysqlcr;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+package com.android.tugas9mysqlcr.ui;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.tugas9mysqlcr.manage.GetInsertKaryawan;
+import com.android.tugas9mysqlcr.R;
+import com.android.tugas9mysqlcr.response.GetInsertKaryawan;
+import com.android.tugas9mysqlcr.retrofit.ApiClient;
+import com.android.tugas9mysqlcr.retrofit.ApiInterface;
 
 import java.util.Calendar;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,6 +27,10 @@ public class AddActivity extends AppCompatActivity {
     private ApiInterface mApiInterface;
     AlertDialog.Builder builder;
     DatePickerDialog pickerdate;
+    Calendar calendar = Calendar.getInstance();
+    int day = calendar.get(Calendar.DAY_OF_MONTH);
+    int month = calendar.get(Calendar.MONTH);
+    int year = calendar.get(Calendar.YEAR);
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -47,10 +50,6 @@ public class AddActivity extends AppCompatActivity {
         Button simpan = findViewById(R.id.button);
         Button clear = findViewById(R.id.button2);
         builder = new AlertDialog.Builder(this);
-        Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH);
-        int year = calendar.get(Calendar.YEAR);
 
         tgl.setInputType(0);
         mApiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
@@ -83,7 +82,8 @@ public class AddActivity extends AppCompatActivity {
                 builder.setTitle("Gagal")
                         .setMessage("Harap masukkan kode")
                         .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
-                        .create().show();
+                        .create()
+                        .show();
             } else {
                 Karyawaninsertget(kode.getText().toString(),
                         nama.getText().toString(),

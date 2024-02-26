@@ -1,4 +1,4 @@
-package com.android.tugas9mysqlcr;
+package com.android.tugas9mysqlcr.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.tugas9mysqlcr.response.Hasil;
+import com.android.tugas9mysqlcr.R;
 
 import java.util.List;
 

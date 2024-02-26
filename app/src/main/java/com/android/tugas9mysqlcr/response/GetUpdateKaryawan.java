@@ -1,11 +1,11 @@
-package com.android.tugas9mysqlcr.manage;
+package com.android.tugas9mysqlcr.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class GetDeleteKaryawan {
+public class GetUpdateKaryawan {
     @SerializedName("hasil")
     @Expose
     private List<String> hasil;

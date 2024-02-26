@@ -1,9 +1,9 @@
-package com.android.tugas9mysqlcr;
+package com.android.tugas9mysqlcr.retrofit;
 
-import com.android.tugas9mysqlcr.manage.GetDeleteKaryawan;
-import com.android.tugas9mysqlcr.manage.GetInsertKaryawan;
-import com.android.tugas9mysqlcr.manage.GetKaryawan;
-import com.android.tugas9mysqlcr.manage.GetUpdateKaryawan;
+import com.android.tugas9mysqlcr.response.GetDeleteKaryawan;
+import com.android.tugas9mysqlcr.response.GetInsertKaryawan;
+import com.android.tugas9mysqlcr.response.GetKaryawan;
+import com.android.tugas9mysqlcr.response.GetUpdateKaryawan;
 
 import retrofit2.Call;
 import retrofit2.http.Field;

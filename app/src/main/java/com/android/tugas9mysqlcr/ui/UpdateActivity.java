@@ -1,16 +1,21 @@
-package com.android.tugas9mysqlcr;
+package com.android.tugas9mysqlcr.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.android.tugas9mysqlcr.R;
+import com.android.tugas9mysqlcr.response.GetDeleteKaryawan;
+import com.android.tugas9mysqlcr.response.GetUpdateKaryawan;
+import com.android.tugas9mysqlcr.retrofit.ApiClient;
+import com.android.tugas9mysqlcr.retrofit.ApiInterface;
 
 import java.util.Calendar;
 
@@ -45,7 +50,7 @@ public class UpdateActivity extends AppCompatActivity {
         kode.setInputType(0);
         tgl.setInputType(0);
 
-        mApiInterface =ApiClient.getRetrofit().create(ApiInterface.class);
+        mApiInterface = ApiClient.getApiService();
 
         kode.setText(getIntent().getStringExtra("kode"));
         nama.setText(getIntent().getStringExtra("nama"));
@@ -67,11 +72,11 @@ public class UpdateActivity extends AppCompatActivity {
         tgl.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
+                if (hasFocus) {
                     pickerdate = new DatePickerDialog(UpdateActivity.this, new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            tgl.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                            tgl.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
                         }
                     }, year, month, day);
                     pickerdate.show();
@@ -82,7 +87,7 @@ public class UpdateActivity extends AppCompatActivity {
                         pickerdate = new DatePickerDialog(UpdateActivity.this, new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                tgl.setText(dayOfMonth+"/0"+(month+1)+"/"+year);
+                                tgl.setText(dayOfMonth + "/0" + (month + 1) + "/" + year);
                             }
                         }, year, month, day);
                         pickerdate.show();
@@ -94,7 +99,7 @@ public class UpdateActivity extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Karyawanupdateget(kode.getText().toString(),nama.getText().toString(), alamat.getText().toString(), telp.getText().toString(),tgl.getText().toString(),kota.getText().toString(), kabupaten.getText().toString(),kecamatan.getText().toString(),kelurahan.getText().toString());
+                Karyawanupdateget(kode.getText().toString(), nama.getText().toString(), alamat.getText().toString(), telp.getText().toString(), tgl.getText().toString(), kota.getText().toString(), kabupaten.getText().toString(), kecamatan.getText().toString(), kelurahan.getText().toString());
                 finish();
             }
         });
@@ -107,32 +112,35 @@ public class UpdateActivity extends AppCompatActivity {
         });
     }
 
-    public void Karyawanupdateget(String kode, String nama, String alamat, String telp,
-                                  String tgl, String kota, String kabupaten, String kecamatan, String kelurahan)
-    {
-        mApiInterface.getupdatekaryawan("ok",kode, nama, alamat, telp, tgl, kota, kabupaten, kecamatan, kelurahan).enqueue(new Callback<GetUpdateKaryawan>() {
+    public void Karyawanupdateget(String kode, String nama, String alamat, String telp, String tgl, String kota, String kabupaten, String kecamatan, String kelurahan) {
+        mApiInterface.getupdatekaryawan("ok", kode, nama, alamat, telp, tgl, kota, kabupaten, kecamatan, kelurahan).enqueue(new Callback<GetUpdateKaryawan>() {
             @Override
             public void onResponse(Call<GetUpdateKaryawan> call, Response<GetUpdateKaryawan> response) {
-                Toast.makeText(UpdateActivity.this, "Diupdate", Toast.LENGTH_SHORT).show();
+                if (response.isSuccessful()) {
+                    Toast.makeText(UpdateActivity.this, "Diupdate", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(UpdateActivity.this, "Gagal Diupdate", Toast.LENGTH_SHORT).show();
+                }
             }
+
             @Override
             public void onFailure(Call<GetUpdateKaryawan> call, Throwable t) {
-                Toast.makeText(getApplication(),"Gagal", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplication(), "Gagal", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public void Karyawandeleteget(String kode)
-    {
-        mApiInterface.getdeletekaryawan("ok",kode).enqueue(new Callback<GetDeleteKaryawan>() {
+    public void Karyawandeleteget(String kode) {
+        mApiInterface.getdeletekaryawan("ok", kode).enqueue(new Callback<GetDeleteKaryawan>() {
             @Override
             public void onResponse(Call<GetDeleteKaryawan> call, Response<GetDeleteKaryawan> response) {
 //                Toast.makeText(getApplication(),response.body().getHasil().get(0).toString(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(UpdateActivity.this, "Dihapus", Toast.LENGTH_SHORT).show();
             }
+
             @Override
             public void onFailure(Call<GetDeleteKaryawan> call, Throwable t) {
-                Toast.makeText(getApplication(),"Gagal", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplication(), "Gagal", Toast.LENGTH_SHORT).show();
             }
         });
     }

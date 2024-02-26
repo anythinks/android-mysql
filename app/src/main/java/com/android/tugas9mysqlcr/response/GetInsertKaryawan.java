@@ -1,21 +1,21 @@
-package com.android.tugas9mysqlcr.manage;
+package com.android.tugas9mysqlcr.response;
 
-import com.android.tugas9mysqlcr.Hasil;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class GetKaryawan {
+public class GetInsertKaryawan {
     @SerializedName("hasil")
     @Expose
-    private List<Hasil> hasil;
+    private List<String> hasil;
 
-    public List<Hasil> getHasil() {
+    public List<String> getHasil() {
         return hasil;
     }
 
-    public void setHasil(List<Hasil> hasil) {
+    public void setHasil(List<String> hasil) {
         this.hasil = hasil;
     }
 }
+
